@@ -505,12 +505,11 @@ a.read-paper button:hover {
   div.white figure figcaption {
     bottom: 0px;
     width: 100%;
-    padding: 50px;
+    padding: 4rem;
     background-color: rgb(230, 230, 230);
   }
 
   div.white figure figcaption p {
-    max-width: 1000px;
     font-size: 1.2em;
   }
 
