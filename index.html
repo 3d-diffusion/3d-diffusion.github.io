@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
+    <title>Novel View Synthesis with Diffusion Models</title>
+  </head>
+  <body>
+
+    <div style="padding-top: 50px; padding-bottom: 50px; background-color: rgb(0, 0, 0);">
+      <h1 style="text-align: center;">Novel View Synthesis with Diffusion Models</h1>
+      <h2 style="text-align: center;">3D generation from a single image</h2>
+    </div>
+
+    <div class="authors">
+      <p style="padding-bottom: 25px;">Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, Mohammad Norouzi</p>
+      <p class="smaller">Google Research, Brain Team</p>
+    </div>
+
+    <div class="topgallery">
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_6_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_6_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_17_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_17_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_42_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_42_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_121_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_121_hyp.mp4"></video>
+      </div>
+    </div>
+
+    <div class="abstract">
+      <div class="inside">
+        <p class="text">
+We present 3DiM (pronounced "three-dim"), a diffusion model for 3D novel view synthesis from as few as a single image.
+The core of 3DiM is an image-to-image diffusion model -- 3DiM takes a single reference view and a relative pose as input, and generates a novel view via diffusion.
+3DiM can then generate a full 3D consistent scene following our novel <i>stochastic conditioning</i> sampler. The output frames of the scene are generated autoregressively. During the reverse diffusion process of each individual frame, we select a random conditioning frame from the set of previous frames at each denoising step. We demonstrate that stochastic conditioning yields much more 3D consistent results compared to the na&#239;ve sampling process which only conditions on a single previous frame.
+We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3DiM's generated videos from a single view achieve much higher fidelity while being approximately 3D consistent. We also introduce a new evaluation methodology, <i>3D consistency scoring</i>, to <i>measure</i> the 3D consistency of a generated object by training a neural field on the model's output views.
+3DiMs are geometry free, do not rely on hyper-networks or test-time optimization for novel view synthesis, and allow a single model to easily scale to a large number of scenes.
+        </p>
+        <br>
+        <a class="read-paper" href="./static/paper.pdf" target="_blank"><button>Research Paper</button></a>
+      </div>
+    </div>
+
+    <div class="header_dark_gray" style="background-color: rgb(35, 35, 35);">
+      <h1>3DiM is an AI system that creates 3D renderings from a single input image. </h1>
+    </div>
+
+    <div class="white">
+      <figure class="sampler">
+        <div><object type="image/svg+xml" data="./static/stochastic_cond_shoe.svg"></object></div>
+        <figcaption><p><b>Generation with 3DiM</b> -- We propose <i>stochastic conditioning</i>, a new sampling strategy where we generate views autoregressively with an image-to-image diffusion model. At each denoising step, we condition on a <i>random</i> previous view, so the denoising process is guided to be 3D consistent to all previous frames with enough denoising steps.</p></figcaption>
+      </figure>
+
+    </div>
+
+    <div class="abstract">
+      <div class="inside">
+        <h2 style="text-align: center;">Results on diverse data</h2>
+        <br>
+        <p class="text">We show select samples from a single 3DiM trained on <i>all</i> of ShapeNet. We rendered 250 views for each asset with <a href="https://github.com/google-research/kubric">kubric</a>, and trained a 471M parameter 3DiM. Videos are sampled from a single input image, with 256 denoising steps, i.e., 512 model forward passes taking into account classifier-free guidance.</p>
+      </div>
+    </div>
+
+    <div class="topgallery">
+      <!-- ROW 1 -->
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/airplane_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/airplane_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/basket_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/basket_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/bench_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/bench_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/toyhouse_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/toyhouse_hyp.mp4"></video>
+      </div>
+      <!-- ROW 2 -->
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/birdhouse_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/birdhouse_hyp_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/shelf_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/shelf_hyp_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/bus_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/bus_hyp_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/kubric_shapenet/plate_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/plate_hyp_360.mp4"></video>
+      </div>
+    </div>
+
+    <div class="abstract">
+      <div class="inside">
+        <h2 style="text-align: center;">Pose Conditioning &times; Image-to-Image Diffusion</h2>
+        <br>
+        <p class="text">By allowing the core of 3DiM to remain an image-to-image model, we can bypass the difficulties of designing and training architectures that jointly model multiple frames. More importantly, we enable training with datasets that have as few as <i>two</i> views per scene.</p>
+      </div>
+    </div>
+
+    <div class="content1">
+      <div>
+        <h1>3DiM research highlights</h1>
+        <ul class="highlights">
+          <li>We demonstrate the effectiveness of diffusion models for novel view synthesis.</li>
+          <li><i>Stochastic conditioning</i> -- novel sampler to achieve approximate 3D consistency.</li>
+          <li><i>X-UNet</i> -- improved results by modifying the usual image-to-image UNet to use weight-sharing and cross-attention.</li>
+          <li><i>3D consistency scoring</i> -- new evaluation method to quantify 3D consistency of geometry-free models.</li>
+        </ul>
+      </div>
+      <div class="right">
+        <figure class="unet">
+          <div><object type="image/svg+xml" data="./static/unet.svg"></object></div>
+          <figcaption><p><b>X-UNet</b> -- Our proposed changes to the image-to-image UNet, which we show are critical to achieve high-quality results.</p></figcaption>
+        </figure>
+
+      </div>
+    </div>
+
+    <div class="abstract">
+      <div class="inside">
+        <h2 style="text-align: center;">Comparisons to Prior Work</h2>
+        <br>
+        <p class="text">We compare against prior state-of-the-art methods on novel view synthesis from few images on the SRN ShapeNet benchmark. The methods whose outputs we could acquire all guarantee 3D consistency, due to the use of volume rendering (unlike 3DiM). We render the same trajectories given the same conditioning image.</p>
+      </div>
+    </div>
+
+    <div class="sota-comparisons nomobile">
+      <div class="row">
+        <div class="col">Input View</div>
+        <div class="col">SRN</div>
+        <div class="col">PixelNeRF</div>
+        <div class="col">VisionNeRF</div>
+        <div class="col"><b>3DiM (ours)</b></div>
+        <div class="col">Ground Truth</div>
+      </div>
+      <div class="row">
+        <div class="col"><img src="./static/sota_comparisons/10_cond.png"/></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/10_tgt.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col"><img src="./static/sota_comparisons/106_cond.png"/></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/106_tgt.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col"><img src="./static/sota_comparisons/138_cond.png"/></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/138_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/138_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/138_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/138_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/138_tgt.mp4"></video></div>
+      </div>
+    </div>
+    <div class="sota-comparisons mobileonly">
+      <div class="row">
+        <div class="col">Input View</div>
+        <div class="col"><img src="./static/sota_comparisons/10_cond.png"/></div>
+        <div class="col"><img src="./static/sota_comparisons/106_cond.png"/></div>
+        <div class="col"><img src="./static/sota_comparisons/138_cond.png"/></div>
+      </div>
+      <div class="row">
+        <div class="col">SRN</div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/srn/138_hyp.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col">PixelNeRF</div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/pixelnerf/138_hyp.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col">VisionNeRF</div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/visionnerf/138_hyp.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col"><b>3DiM (ours)</b></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/10_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/106_hyp.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/ours/138_hyp.mp4"></video></div>
+      </div>
+      <div class="row">
+        <div class="col">Real Data</div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/10_tgt.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/106_tgt.mp4"></video></div>
+        <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/138_tgt.mp4"></video></div>
+      </div>
+    </div>
+    <div class="abstract">
+      <div class="inside">
+        <h2 style="text-align: center;">State-of-the-art FID scores on SRN ShapeNet</h2>
+        <br>
+        <p class="text">Prior methods directly regress outputs, often leading to severe bluriness. We show that 3DiM overcomes this problem: it is a generative model by design, and diffusion models have a natural inductive bias towards generating much sharper samples. Below we show more samples from the 3DiMs we trained for prior work comparisons; a 471M parameter 3DiM for cars, and a 1.3B parameter 3DiM for chairs.</p>
+      </div>
+    </div>
+
+    <!-- <div class="topgallery" style="padding: 40px 80px;"> -->
+    <div class="topgallery">
+      <!-- ROW 1 -->
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_10_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_10_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_29_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_29_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_98_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_98_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_70_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_70_hyp.mp4"></video>
+      </div>
+      <!-- ROW 2 -->
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_37_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_37_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_138_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_138_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_36_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_36_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_106_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_106_hyp.mp4"></video>
+      </div>
+      <!-- ROW 3 -->
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_68_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_68_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_42_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_42_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_51_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_51_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_51_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_51_hyp.mp4"></video>
+      </div>
+      <!-- ROW 4 -->
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_52_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_52_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_69_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_69_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/chairs_61_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_61_hyp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/srn_shapenet/cars_54_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_54_hyp.mp4"></video>
+      </div>
+    </div>
+
+    <div class="thanks">
+      <h1>Special Thanks</h1>
+      <br>
+      <p class="smaller" style="text-align: justify;">We would like to thank Ben Poole for thoroughly reviewing this work, and providing useful feedback and ideas since the earliest stages of our research. We thank Tim Salimans for providing us with stable code to train diffusion models, which we used as the starting point for this paper, as well as code for neural network modules and diffusion sampling tricks used in their more recent "Video Diffusion Models" paper. We thank Erica Moreira for her critical support on juggling resource allocations for us to execute our work. We also thank David Fleet for his key support on securing the computational resources required for our work, as well as the many helpful research discussions throughout. We additionally would like to acknowledge and thank Kai-En Lin and Vincent Sitzmann for providing us with the outputs of their work on novel view synthesis and their helpful correspondence. We thank Mehdi Sajjadi and Etienne Pot for consistently lending us their expertise, especially on issues with datasets, cameras, rays, and all-things 3D. We thank Keunhong Park, who refactored a lot of the NeRF code we used, which made it easier to implement our proposed 3D consistency evaluation scheme. We thank Sarah Laszlo for helping us ensure our models and datasets meet responsible AI practices. Finally, we'd like to thank Geoffrey Hinton, Chitwan Saharia, and more widely the Google Brain Toronto team for their useful feedback, suggestions, and ideas throughout our research effort.</p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  </body>
+</html>
