@@ -14,18 +14,21 @@
     <title>Novel View Synthesis with Diffusion Models</title>
   </head>
   <body>
-
     <div style="padding-top: 50px; padding-bottom: 50px; background-color: rgb(0, 0, 0);">
       <h1 style="text-align: center;">Novel View Synthesis with Diffusion Models</h1>
       <h2 style="text-align: center;">3D generation from a single image</h2>
     </div>
 
-    <div class="authors">
+    <!-- <div class="authors">
       <p style="padding-bottom: 25px;">Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, Mohammad Norouzi</p>
       <p class="smaller">Google Research, Brain Team</p>
+    </div> -->
+
+    <div style="text-align: center; padding: 0 1rem; background-color: rgb(0, 0, 0);">
+      <video controls muted style="max-width: calc(100vw - 2rem);"><source type="video/mp4" src="./static/output.mp4"></video>
     </div>
 
-    <div class="topgallery">
+    <!-- <div class="topgallery">
       <div class="input-output">
         <img src="./static/srn_shapenet/cars_6_cond.png">
         <span>&#8594</span>
@@ -46,7 +49,7 @@
         <span>&#8594</span>
         <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_121_hyp.mp4"></video>
       </div>
-    </div>
+    </div> -->
 
     <div class="abstract">
       <div class="inside">
@@ -57,6 +60,8 @@ The core of 3DiM is an image-to-image diffusion model -- 3DiM takes a single ref
 We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3DiM's generated videos from a single view achieve much higher fidelity while being approximately 3D consistent. We also introduce a new evaluation methodology, <i>3D consistency scoring</i>, to <i>measure</i> the 3D consistency of a generated object by training a neural field on the model's output views.
 3DiMs are geometry free, do not rely on hyper-networks or test-time optimization for novel view synthesis, and allow a single model to easily scale to a large number of scenes.
         </p>
+        <br>
+        <p class="text">Authored by Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, and Mohammad Norouzi from Google Research.</p>
         <br>
         <a class="read-paper" href="./static/paper.pdf" target="_blank"><button>Research Paper</button></a>
       </div>
@@ -329,6 +334,11 @@ We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3
         <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_54_hyp.mp4"></video>
       </div>
     </div>
+
+    <!-- <div class="authors">
+      <p style="padding-bottom: 25px;">Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, Mohammad Norouzi</p>
+      <p class="smaller">Google Research</p>
+    </div> -->
 
     <div class="thanks">
       <h1>Special Thanks</h1>
