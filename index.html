@@ -14,77 +14,411 @@
     <title>Novel View Synthesis with Diffusion Models</title>
   </head>
   <body>
-    <div style="padding: 2rem 0; background-color: rgb(0, 0, 0);">
+    <div style="padding: 2rem 0;">
       <h1 style="text-align: center;">Novel View Synthesis with Diffusion Models</h1>
       <h2 style="text-align: center;">3D generation from a single image</h2>
     </div>
 
-    <!-- <div class="authors">
-      <p style="padding-bottom: 25px;">Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, Mohammad Norouzi</p>
-      <p class="smaller">Google Research, Brain Team</p>
-    </div> -->
-
-    <div style="text-align: center; padding: 0; background-color: rgb(0, 0, 0);">
+    <div style="text-align: center; padding: 0;">
       <video autoplay loop muted style="max-width: 100vw;"><source type="video/mp4" src="./static/output.mp4"></video>
     </div>
-
-    <!-- <div class="topgallery">
-      <div class="input-output">
-        <img src="./static/srn_shapenet/cars_6_cond.png">
-        <span>&#8594</span>
-        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_6_hyp.mp4"></video>
-      </div>
-      <div class="input-output">
-        <img src="./static/srn_shapenet/chairs_17_cond.png">
-        <span>&#8594</span>
-        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_17_hyp.mp4"></video>
-      </div>
-      <div class="input-output">
-        <img src="./static/srn_shapenet/cars_42_cond.png">
-        <span>&#8594</span>
-        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_42_hyp.mp4"></video>
-      </div>
-      <div class="input-output">
-        <img src="./static/srn_shapenet/chairs_121_cond.png">
-        <span>&#8594</span>
-        <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/chairs_121_hyp.mp4"></video>
-      </div>
-    </div> -->
 
     <div class="abstract">
       <div class="inside">
         <p class="text">
-We present 3DiM (pronounced "three-dim"), a diffusion model for 3D novel view synthesis from as few as a single image.
-The core of 3DiM is an image-to-image diffusion model -- 3DiM takes a single reference view and a relative pose as input, and generates a novel view via diffusion.
-3DiM can then generate a full 3D consistent scene following our novel <i>stochastic conditioning</i> sampler. The output frames of the scene are generated autoregressively. During the reverse diffusion process of each individual frame, we select a random conditioning frame from the set of previous frames at each denoising step. We demonstrate that stochastic conditioning yields much more 3D consistent results compared to the na&#239;ve sampling process which only conditions on a single previous frame.
-We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3DiM's generated videos from a single view achieve much higher fidelity while being approximately 3D consistent. We also introduce a new evaluation methodology, <i>3D consistency scoring</i>, to <i>measure</i> the 3D consistency of a generated object by training a neural field on the model's output views.
-3DiMs are geometry free, do not rely on hyper-networks or test-time optimization for novel view synthesis, and allow a single model to easily scale to a large number of scenes.
+We present 3DiM, a diffusion model for 3D novel view synthesis, which is able to translate a single input view into consistent and sharp completions across many views. The core component of 3DiM is a pose-conditional image-to-image diffusion model, which is trained to take a source view and its pose as inputs, and generates a novel view for a target pose as output. 3DiM can then generate multiple views that are approximately 3D consistent using a novel technique called <i>stochastic conditioning</i>. At inference time, the output views are generated autoregressively. When generating each novel view, one selects a random conditioning view from the set of previously generated views at each denoising step. We demonstrate that stochastic conditioning significantly improves 3D consistency compared to a naive sampler for an image-to-image diffusion model, which involves conditioning on a single fixed view. We compare 3DiM to prior work on the SRN ShapeNet dataset, demonstrating that 3DiM's generated completions from a single view achieve much higher fidelity, while being approximately 3D consistent. We also introduce a new evaluation methodology, <i>3D consistency scoring</i>, to <i>quantify</i> the 3D consistency of a generated object by training a neural field on the model's output views. 3DiM is geometry free, does not rely on hyper-networks or test-time optimization for novel view synthesis, and allows a single model to easily scale to a large number of scenes.
         </p>
         <br>
-        <p class="text">Authored by Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, and Mohammad Norouzi from Google Research.</p>
+        <p class="text">Authored by Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi and Mohammad Norouzi from Google Research.</p>
         <br>
-        <a class="read-paper" href="https://arxiv.org/abs/2210.04628" target="_blank"><button>Research Paper</button></a>
+        <a class="read-paper" style="text-align: center;" href="https://arxiv.org/abs/2210.04628" target="_blank"><button>Research Paper</button></a>
       </div>
     </div>
 
-    <div class="header_dark_gray" style="background-color: rgb(35, 35, 35);">
-      <h1>3DiM is an AI system that creates 3D renderings from a single input image. </h1>
+    <div class="header_dark_gray">
+      <h1>Lifting 2D images from text-to-image models into 3D</h1>
     </div>
 
-    <div class="white">
-      <figure class="sampler">
-        <div><object type="image/svg+xml" data="./static/stochastic_cond_shoe.svg"></object></div>
-        <figcaption><p><b>Generation with 3DiM</b> -- We propose <i>stochastic conditioning</i>, a new sampling strategy where we generate views autoregressively with an image-to-image diffusion model. At each denoising step, we condition on a <i>random</i> previous view, so the denoising process is guided to be 3D consistent to all previous frames with enough denoising steps.</p></figcaption>
-      </figure>
+    <div class="topgallery imagen">
+      <!-- ROW 1 -->
+      <div class="input-output">
+        <span class="prompt">A mug with '3DiM' written on it, white background, no shadow.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/3dim.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/3dim.mp4"></video>
+      </div>
+      <div class="input-output">
+        <span class="prompt">A 20th century stove, white background, no shadow.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/stove.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/stove.mp4"></video>
+      </div>
+      <!-- ROW 2 -->
+      <div class="input-output">
+        <span class="prompt">A bed made of stone, white background, no shadows, at an angle.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/stonebed.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/stonebed.mp4"></video>
+      </div>
+      <div class="input-output">
+        <span class="prompt">A rusty car at an angle, white background, no shadow.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/rustycar.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/rustycar.mp4"></video>
+      </div>
+      <!-- ROW 3 -->
+      <div class="input-output">
+        <span class="prompt">An upright piano, at an angle, white background, no shadow.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/piano.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/piano.mp4"></video>
+      </div>
+      <div class="input-output">
+        <span class="prompt">An avocado in the shape of an armchair, white background, no shadow, at an angle, remove shadows.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/avocado.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/avocado.mp4"></video>
+      </div>
+      <!-- ROW 4 -->
+      <div class="input-output">
+        <span class="prompt">An antique clock, white background, no shadow.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/clock.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/clock.mp4"></video>
+      </div>
+      <div class="input-output">
+        <span class="prompt">A modern printer, white background, no shadows.</span>
+        <span>&#8594</span>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/printer.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/printer.mp4"></video>
+      </div>
+    </div>
 
+    <div class="topgallery">
+      <!-- ROW 1 -->
+      <div class="input-output">
+        <img src="./static/imagen/random/trash.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/trash.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/books.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/books.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/cabinet.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/cabinet.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/cool/imagen.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/imagen.mp4"></video>
+      </div>
+      <!-- ROW 2 -->
+      <div class="input-output">
+        <img src="./static/imagen/cool/motorcycle.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/cool/motorcycle.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/sofa.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/sofa.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/lamp.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/lamp.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/chair.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/chair.mp4"></video>
+      </div>
+      <!-- ROW 3 -->
+      <div class="input-output">
+        <img src="./static/imagen/360/bathtub.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/bathtub.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/bowl.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/bowl.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/car.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/car.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/chair.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/chair.mp4"></video>
+      </div>
+      <!-- ROW 4 -->
+      <div class="input-output">
+        <img src="./static/imagen/random/chair.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/chair.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/pillow.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/pillow.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/random/birdhouse.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/random/birdhouse.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/imagen/360/washer.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/imagen/360/washer.mp4"></video>
+      </div>
     </div>
 
     <div class="abstract">
       <div class="inside">
-        <h2 style="text-align: center;">Results on diverse data</h2>
+        <p class="text">These samples are from a single 3DiM trained on <i>all</i> of ShapeNet. Unlike the models studied in the paper, this 3DiM only takes the <i>relative pose</i> as input, rather than source and target absolute poses. This allows us to test the model on arbitrary images where no pose is available, as we only ask for relative changes in pose. The source images were produced with <a href="https://imagen.research.google/">Imagen</a>, an AI system that converts text into images.</p>
         <br>
-        <p class="text">We show select samples from a single 3DiM trained on <i>all</i> of ShapeNet. We rendered 250 views for each asset with <a href="https://github.com/google-research/kubric">kubric</a>, and trained a 471M parameter 3DiM. Videos are sampled from a single input image, with 256 denoising steps.</p>
+        <p class="text">To increase robustness, the training view pairs are rendered with objects at a random orientation and varying scales. We rendered 128 pairs (256 views) for each training object using <a href="https://github.com/google-research/kubric">kubric</a>. We also add random hue augmentation during training. The model was trained for 840K training steps at batch size 512, and has 471M parameters. We use 256 denoising steps at generation time with classifier-free guidance (with a guidance weight of 6).</p>
+        <br>
+        <p class="text">To make Imagen generate objects on white backgrounds, we inpaint a 5px white border when generating a 64x64 image from text, and then upsample the images to 128x128 using a text-conditional super-resolution model.</p>
       </div>
+    </div>
+
+    <div class="header_dark_gray">
+      <h1>Lifting 2D images from the internet into 3D</h1>
+    </div>
+
+    <div class="topgallery">
+      <!-- ROW 1 -->
+      <div class="input-output">
+        <img src="./static/internet/1.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/1.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/2.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/2.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/3.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/3.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/4.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/4.mp4"></video>
+      </div>
+      <!-- ROW 2 -->
+      <div class="input-output">
+        <img src="./static/internet/5.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/5.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/6.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/6.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/7.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/7.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/8.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/8.mp4"></video>
+      </div>
+      <!-- ROW 3 -->
+      <div class="input-output">
+        <img src="./static/internet/9.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/9.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/10.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/10.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/11.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/11.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/12.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/12.mp4"></video>
+      </div>
+      <!-- ROW 4 -->
+      <div class="input-output">
+        <img src="./static/internet/13.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/13.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/14.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/14.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/15.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/15.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/16.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/16.mp4"></video>
+      </div>
+      <!-- ROW 5 -->
+      <div class="input-output">
+        <img src="./static/internet/17.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/17.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/18.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/18.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/19.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/19.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/20.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/20.mp4"></video>
+      </div>
+      <!-- ROW 6 -->
+      <div class="input-output">
+        <img src="./static/internet/21.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/21.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/22.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/22.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/23.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/23.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/24.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/24.mp4"></video>
+      </div>
+      <!-- ROW 7 -->
+      <div class="input-output">
+        <img src="./static/internet/25.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/25.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/26.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/26.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/27.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/27.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/28.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/28.mp4"></video>
+      </div>
+      <!-- ROW 8 -->
+      <div class="input-output">
+        <img src="./static/internet/29.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/29.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/30.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/30.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/31.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/31.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/32.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/32.mp4"></video>
+      </div>
+      <!-- ROW 9 -->
+      <div class="input-output">
+        <img src="./static/internet/33.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/33.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/34.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/34.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/35.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/35.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/internet/36.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/internet/36.mp4"></video>
+      </div>
+    </div>
+
+    <div class="abstract">
+      <div class="inside">
+        <p>These samples are from the same 3DiM as the first set of samples. The source images, however, we took the source images directly from the internet, just ensuring they correspond to some ShapeNet classes and that they have white backgrounds and little to no shadow.</p>
+      </div>
+    </div>
+
+    <div class="header_dark_gray">
+      <h1>Results on ShapeNet test objects</h1>
     </div>
 
     <div class="topgallery">
@@ -130,41 +464,100 @@ We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3
         <span>&#8594</span>
         <video autoplay loop muted><source type="video/mp4" src="./static/kubric_shapenet/plate_hyp_360.mp4"></video>
       </div>
+      <!-- ROW 3 -->
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/5_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/5_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/1_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/1_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/100_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/100_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/104_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/104_360.mp4"></video>
+      </div>
+      <!-- ROW 4 -->
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/112_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/112_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/116_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/116_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/119_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/119_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/125_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/125_360.mp4"></video>
+      </div>
+      <!-- ROW 5 -->
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/41_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/41_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/43_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/43_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/52_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/52_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/17_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/17_360.mp4"></video>
+      </div>
+      <!-- ROW 6 -->
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/89_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/89_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/85_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/85_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/65_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/65_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/kubric_shapenet_v/67_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/kubric_shapenet_v/67_360.mp4"></video>
+      </div>
     </div>
 
     <div class="abstract">
       <div class="inside">
-        <h2 style="text-align: center;">Pose Conditioning &times; Image-to-Image Diffusion</h2>
-        <br>
-        <p class="text">By allowing the core of 3DiM to remain an image-to-image model, we can bypass the difficulties of designing and training architectures that jointly model multiple frames. More importantly, we enable training with datasets that have as few as <i>two</i> views per scene.</p>
+        <p class="text">We show samples from a single 3DiM trained on all of ShapeNet. The source views were taken from ShapeNet objects we did <i>not</i> include as part of the training data.</p>
       </div>
     </div>
 
-    <div class="content1">
-      <div>
-        <h1>3DiM research highlights</h1>
-        <ul class="highlights">
-          <li>We demonstrate the effectiveness of diffusion models for novel view synthesis.</li>
-          <li><i>Stochastic conditioning</i> -- novel sampler to achieve approximate 3D consistency.</li>
-          <li><i>X-UNet</i> -- improved results by modifying the usual image-to-image UNet to use weight-sharing and cross-attention.</li>
-          <li><i>3D consistency scoring</i> -- new evaluation method to quantify 3D consistency of geometry-free models.</li>
-        </ul>
-      </div>
-      <div class="right">
-        <figure class="unet">
-          <div><object type="image/svg+xml" data="./static/unet.svg"></object></div>
-          <figcaption><p><b>X-UNet</b> -- Our proposed changes to the image-to-image UNet, which we show are critical to achieve high-quality results.</p></figcaption>
-        </figure>
-
-      </div>
-    </div>
-
-    <div class="abstract">
-      <div class="inside">
-        <h2 style="text-align: center;">Comparisons to Prior Work</h2>
-        <br>
-        <p class="text">We compare against prior state-of-the-art methods on novel view synthesis from few images on the SRN ShapeNet benchmark. The methods whose outputs we could acquire all guarantee 3D consistency, due to the use of volume rendering (unlike 3DiM). We render the same trajectories given the same conditioning image.</p>
-      </div>
+    <div class="header_dark_gray">
+      <h1>Comparisons to prior work</h1>
     </div>
 
     <div class="sota-comparisons nomobile">
@@ -239,15 +632,19 @@ We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3
         <div class="col"><video autoplay loop muted><source type="video/mp4" src="./static/sota_comparisons/138_tgt.mp4"></video></div>
       </div>
     </div>
+
     <div class="abstract">
       <div class="inside">
-        <h2 style="text-align: center;">State-of-the-art FID scores on SRN ShapeNet</h2>
+        <p class="text">We compare against prior state-of-the-art methods on novel view synthesis from few images on the SRN ShapeNet benchmark. The methods whose outputs we could acquire all guarantee 3D consistency, due to the use of volume rendering (unlike 3DiM). We render the same trajectories given the same conditioning image.</p>
         <br>
         <p class="text">Prior methods directly regress outputs, often leading to severe bluriness. We show that 3DiM overcomes this problem: it is a generative model by design, and diffusion models have a natural inductive bias towards generating much sharper samples. Below we show more samples from the 3DiMs we trained for prior work comparisons; a 471M parameter 3DiM for cars, and a 1.3B parameter 3DiM for chairs.</p>
       </div>
     </div>
 
-    <!-- <div class="topgallery" style="padding: 40px 80px;"> -->
+    <div class="header_dark_gray">
+      <h1>State-of-the-art FID scores on SRN ShapeNet</h1>
+    </div>
+
     <div class="topgallery">
       <!-- ROW 1 -->
       <div class="input-output">
@@ -333,17 +730,161 @@ We compare 3DiMs to prior work on the SRN ShapeNet dataset, demonstrating that 3
         <span>&#8594</span>
         <video autoplay loop muted><source type="video/mp4" src="./static/srn_shapenet/cars_54_hyp.mp4"></video>
       </div>
+      <!-- ROW 5 -->
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/199_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/199_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/2_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/2_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/205_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/205_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/21_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/21_360.mp4"></video>
+      </div>
+      <!-- ROW 6 -->
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/210_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/210_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/213_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/213_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/214_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/214_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/220_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/220_360.mp4"></video>
+      </div>
+      <!-- ROW 7 -->
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/233_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/233_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/234_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/234_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/249_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/249_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/srn_cars_128x128_newcfg/245_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/srn_cars_128x128_newcfg/245_360.mp4"></video>
+      </div>
+      <!-- ROW 8 -->
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1024_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1024_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1025_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1025_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1023_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1023_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/103_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/103_360.mp4"></video>
+      </div>
+      <!-- ROW 9 -->
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1038_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1038_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1039_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1039_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1044_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1044_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1045_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1045_360.mp4"></video>
+      </div>
+      <!-- ROW 10 -->
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1050_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1050_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1046_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1046_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1054_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1054_360.mp4"></video>
+      </div>
+      <div class="input-output">
+        <img src="./static/gallery/chairs128_xl/1067_cond.png">
+        <span>&#8594</span>
+        <video autoplay loop muted><source type="video/mp4" src="./static/gallery/chairs128_xl/1067_360.mp4"></video>
+      </div>
     </div>
 
-    <!-- <div class="authors">
-      <p style="padding-bottom: 25px;">Daniel Watson, William Chan, Ricardo Martin-Brualla, Jonathan Ho, Andrea Tagliasacchi, Mohammad Norouzi</p>
-      <p class="smaller">Google Research</p>
-    </div> -->
+    <div class="header_dark_gray">
+      <h1>3DiM Technical Details</h1>
+    </div>
 
-    <div class="thanks">
-      <h1>Special Thanks</h1>
-      <br>
-      <p class="smaller" style="text-align: justify;">We would like to thank Ben Poole for thoroughly reviewing this work, and providing useful feedback and ideas since the earliest stages of our research. We thank Tim Salimans for providing us with stable code to train diffusion models, which we used as the starting point for this paper, as well as code for neural network modules and diffusion sampling tricks used in their more recent "Video Diffusion Models" paper. We thank Erica Moreira for her critical support on juggling resource allocations for us to execute our work. We also thank David Fleet for his key support on securing the computational resources required for our work, as well as the many helpful research discussions throughout. We additionally would like to acknowledge and thank Kai-En Lin and Vincent Sitzmann for providing us with the outputs of their work on novel view synthesis and their helpful correspondence. We thank Mehdi Sajjadi and Etienne Pot for consistently lending us their expertise, especially on issues with datasets, cameras, rays, and all-things 3D. We thank Keunhong Park, who refactored a lot of the NeRF code we used, which made it easier to implement our proposed 3D consistency evaluation scheme. We thank Sarah Laszlo for helping us ensure our models and datasets meet responsible AI practices. Finally, we'd like to thank Geoffrey Hinton, Chitwan Saharia, and more widely the Google Brain Toronto team for their useful feedback, suggestions, and ideas throughout our research effort.</p>
+    <div class="white">
+      <figure class="sampler">
+        <div><object type="image/svg+xml" data="./static/stochastic_cond_shoe.svg"></object></div>
+        <figcaption><p><b>Generation with 3DiM</b> -- We propose <i>stochastic conditioning</i>, a new sampling strategy where we generate views autoregressively with an image-to-image diffusion model. At each denoising step, we condition on a <i>random</i> previous view, so the denoising process is guided to be 3D consistent to all previous frames with enough denoising steps.</p></figcaption>
+      </figure>
+    </div>
+
+    <div class="content1">
+      <div>
+        <h1>3DiM research highlights</h1>
+        <ul class="highlights">
+          <li>We demonstrate the effectiveness of diffusion models for novel view synthesis.</li>
+          <li><i>Stochastic conditioning</i> -- novel sampler to achieve approximate 3D consistency.</li>
+          <li><i>X-UNet</i> -- improved results by modifying the usual image-to-image UNet to use weight-sharing and cross-attention.</li>
+          <li><i>3D consistency scoring</i> -- new evaluation method to quantify 3D consistency of geometry-free models.</li>
+        </ul>
+      </div>
+      <div class="right">
+        <figure class="unet">
+          <div><object type="image/svg+xml" data="./static/unet.svg"></object></div>
+          <figcaption><p><b>X-UNet</b> -- Our proposed changes to the image-to-image UNet, which we show are critical to achieve high-quality results.</p></figcaption>
+        </figure>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>

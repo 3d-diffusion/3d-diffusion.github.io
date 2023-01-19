@@ -3,8 +3,8 @@ body {
   font-size: 14px;
   padding: 0;
   margin: 0;
-  background-color: rgb(35, 35, 35);
-  color: rgb(245, 245, 245);
+  background-color:white;
+  color: black;
   width:  100%;
 }
 
@@ -44,6 +44,19 @@ div.input-output span {
   color: black;
   z-index: 1;
   font-size: 200%;
+}
+.imagen div.input-output span.prompt {
+  position: relative;
+  top: 40%;
+  color: black;
+  z-index: 1;
+  font-size: 200%;
+  width: 75%;
+  font-size: 100%;
+  text-align: right;
+}
+.imagen div.input-output span:last-child {
+  padding-left: calc(22% - 1.5rem);
 }
 div.input-output video {
   width: 50%;
@@ -112,9 +125,9 @@ div.sota-comparisons .col video {
 }
 
 div.authors {
-  background-color: rgb(26, 26, 26);
+  background-color: white;
   /* background-color: rgb(245, 245, 245); */
-  color: rgb(255, 255, 255);
+  color: black;
 }
 
 div.authors p {
@@ -124,8 +137,8 @@ div.authors p {
 }
 
 div.abstract {
-  background-color: rgb(0, 0, 0);
-  color: rgb(255, 255, 255);
+  background-color: white;
+  color: black;
 }
 
 div.abstract div.inside p.text {
@@ -136,11 +149,13 @@ div.abstract div.inside p.text {
 
 a.read-paper {
   text-align: center;
-  display: block;
+  display: inherit;
 }
-
 a.read-paper button:hover {
-  background-color: rgb(26, 26, 26);
+  background-color: rgb(230, 230, 230);
+}
+a.read-paper:first-child {
+  margin-right: 2rem;
 }
 
 @media only screen and (max-width: 999px) {
@@ -170,6 +185,13 @@ a.read-paper button:hover {
     padding-left: calc(25% - 1.5rem);
     padding-top: calc(12.5% - 1.25rem);
   }
+  .imagen div.input-output span.prompt {
+    top: 25%;
+    width: 90%;
+  }
+  .imagen div.input-output span:last-child {
+    padding-left: calc(50% - 1.5rem);
+  }
   div.topgallery video {
     width: 50%;
   }
@@ -182,8 +204,8 @@ a.read-paper button:hover {
   }
 
   div.content1 {
-    background-color: rgb(35, 35, 35);
-    color: rgb(245, 245, 245);
+    background-color: white;
+    color: black;
     display: flex;
     flex-wrap: wrap;
   }
@@ -198,8 +220,8 @@ a.read-paper button:hover {
   div.content1 div.right {
     padding: 25px;
     width: 100%;
-    background-color: rgb(255, 255, 255);
-    color: rgb(26, 26, 26);
+    background-color: white;
+    color: black;
   }
 
   div.content1 h1 {
@@ -248,7 +270,7 @@ a.read-paper button:hover {
   div.content1 table.pretty caption {
     text-align: center;
     font-size: 1em;
-    color: rgb(26, 26, 26);
+    color: black;
   }
 
   div.authors {
@@ -275,13 +297,13 @@ a.read-paper button:hover {
     bottom: 0px;
     width: 100%;
     padding: 2rem;
-    background-color: rgb(230, 230, 230);
+    background-color: white;
   }
 
   div.header_dark_gray {
     padding: 25px 10px;
-    background-color: rgb(0, 0, 0);
-    color: rgb(245, 245, 245);
+    background-color: rgb(230, 230, 230);
+    color: black;
   }
 
   div.header_dark_gray h1 {
@@ -299,8 +321,8 @@ a.read-paper button:hover {
     padding: 10px;
     background: none;
     font: inherit;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid black;
+    color: black;
     border-radius: 4px;
   }
 
@@ -363,8 +385,8 @@ a.read-paper button:hover {
   }
 
   div.content1 {
-    background-color: rgb(35, 35, 35);
-    color: rgb(245, 245, 245);
+    background-color: white;
+    color: black;
     display: flex;
   }
 
@@ -380,8 +402,8 @@ a.read-paper button:hover {
   div.content1 div.right {
     padding: 50px;
     width: 50%;
-    background-color: rgb(255, 255, 255);
-    color: rgb(26, 26, 26);
+    background-color:white;
+    color: black;
   }
 
   div.content1 h1 {
@@ -453,7 +475,7 @@ a.read-paper button:hover {
 
   div.thanks a {
     text-decoration: none;
-    color: rgb(245, 245, 245);
+    color: black;
   }
 
   div.thanks a:link {
@@ -470,7 +492,7 @@ a.read-paper button:hover {
 
   div.thanks a:hover {
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: black;
   }
 
   div.authors {
@@ -515,8 +537,8 @@ a.read-paper button:hover {
 
   div.header_dark_gray {
     padding: 50px;
-    background-color: rgb(0, 0, 0);
-    color: rgb(245, 245, 245);
+    background-color: rgb(230, 230, 230);
+    color: black;
   }
 
   div.header_dark_gray h1 {
@@ -534,8 +556,8 @@ a.read-paper button:hover {
     height: 50px;
     background: none;
     font: inherit;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid black;
+    color: black;
     border-radius: 4px;
   }
 }
