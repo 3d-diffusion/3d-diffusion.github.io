@@ -36,7 +36,7 @@ We present 3DiM, a diffusion model for 3D novel view synthesis, which is able to
     </div>
 
     <div class="header_dark_gray">
-      <h1>Lifting 2D images from text-to-image models into 3D</h1>
+      <h1>Examples: <a href="https://imagen.research.google">Imagen</a> to 3D</h1>
     </div>
 
     <div class="topgallery imagen">
@@ -207,7 +207,7 @@ We present 3DiM, a diffusion model for 3D novel view synthesis, which is able to
 
     <div class="abstract">
       <div class="inside">
-        <p class="text">These samples are from a single 3DiM trained on <i>all</i> of ShapeNet. Unlike the models studied in the paper, this 3DiM only takes the <i>relative pose</i> as input, rather than source and target absolute poses. This allows us to test the model on arbitrary images where no pose is available, as we only ask for relative changes in pose. The source images were produced with <a href="https://imagen.research.google/">Imagen</a>, an AI system that converts text into images.</p>
+        <p class="text">These samples are from a single 3DiM trained on <i>all</i> of ShapeNet. This 3DiM only takes the <i>relative pose</i> as input, rather than source and target absolute poses. This allows us to test the model on arbitrary images where no pose is available, as we only ask for relative changes in pose. The source images were produced with <a href="https://imagen.research.google/">Imagen</a>, an AI system that converts text into images.</p>
         <br>
         <p class="text">To increase robustness, the training view pairs are rendered with objects at a random orientation and varying scales. We rendered 128 pairs (256 views) for each training object using <a href="https://github.com/google-research/kubric">kubric</a>. We also add random hue augmentation during training. The model was trained for 840K training steps at batch size 512, and has 471M parameters. We use 256 denoising steps at generation time with classifier-free guidance (with a guidance weight of 6).</p>
         <br>
@@ -216,7 +216,7 @@ We present 3DiM, a diffusion model for 3D novel view synthesis, which is able to
     </div>
 
     <div class="header_dark_gray">
-      <h1>Lifting 2D images from the internet into 3D</h1>
+      <h1>Examples: in-the-wild images to 3D</h1>
     </div>
 
     <div class="topgallery">
@@ -418,7 +418,7 @@ We present 3DiM, a diffusion model for 3D novel view synthesis, which is able to
     </div>
 
     <div class="header_dark_gray">
-      <h1>Results on ShapeNet test objects</h1>
+      <h1>Examples: ShapeNet renders to 3D</h1>
     </div>
 
     <div class="topgallery">
